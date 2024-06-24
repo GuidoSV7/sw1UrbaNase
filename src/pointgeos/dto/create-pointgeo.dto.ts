@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined } from "class-validator";
+import { IsDefined, IsNumber } from "class-validator";
 
 export class CreatePointgeoDto {
     @ApiProperty({
@@ -8,7 +8,7 @@ export class CreatePointgeoDto {
         nullable: false,
 
     })
-    @IsDefined() 
+    @IsNumber() 
     longitude: number;
     
 
@@ -18,7 +18,7 @@ export class CreatePointgeoDto {
         nullable: false,
 
     })
-    @IsDefined() 
+    @IsNumber()
     latitude: number;
 
     @ApiProperty({
@@ -27,7 +27,7 @@ export class CreatePointgeoDto {
         nullable: false,
 
     })
-    @IsDefined() 
+    @IsNumber()
     order: number;
 
 

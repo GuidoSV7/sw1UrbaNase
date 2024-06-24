@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined } from "class-validator";
+import { IsDefined, IsNumber, IsString } from "class-validator";
 
 export class CreateRoutegeoDto {
     @ApiProperty({
@@ -8,7 +8,7 @@ export class CreateRoutegeoDto {
         nullable: false,
 
     })
-
+    @IsNumber()
     longitude: number;
     
 
@@ -18,7 +18,7 @@ export class CreateRoutegeoDto {
         nullable: false,
 
     })
-
+    @IsNumber()
     latitude: number;
 
     @ApiProperty({
@@ -27,6 +27,7 @@ export class CreateRoutegeoDto {
         nullable: false,
 
     })
+    @IsNumber()
     nrStand: number;
 
     @ApiProperty({
@@ -35,7 +36,17 @@ export class CreateRoutegeoDto {
         nullable: false,
 
     })
-    nameEntrance: number;
+    @IsString()
+    nameEntrance: string;
+
+    @ApiProperty({
+        description: 'Id de la Infraestructura',
+        nullable: false,
+
+    })
+
+    @IsNumber()
+    idInfraestructure: number;
 
 
 }

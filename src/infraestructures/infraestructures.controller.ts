@@ -3,9 +3,9 @@ import { InfraestructuresService } from './infraestructures.service';
 import { CreateInfraestructureDto } from './dto/create-infraestructure.dto';
 import { UpdateInfraestructureDto } from './dto/update-infraestructure.dto';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Infraestructure } from './entities/infraestructure.entity';
-
+@ApiTags('Infraestructures')
 @Controller('infraestructures')
 export class InfraestructuresController {
   constructor(private readonly infraestructuresService: InfraestructuresService) {}
