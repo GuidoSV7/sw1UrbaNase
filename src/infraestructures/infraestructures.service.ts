@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { TypesService } from 'src/types/types.service';
+import { Pointgeo } from 'src/pointgeos/entities/pointgeo.entity';
 
 @Injectable()
 export class InfraestructuresService {
@@ -15,6 +16,8 @@ export class InfraestructuresService {
   constructor(
     @InjectRepository(Infraestructure)
     private readonly infraestructureRepository: Repository<Infraestructure>,
+    @InjectRepository(Pointgeo)
+    private readonly pointGeoRepository: Repository<Pointgeo>,
 
     private readonly typeService: TypesService,
     
@@ -26,11 +29,21 @@ export class InfraestructuresService {
   async create(createInfraestructureDto: CreateInfraestructureDto) {
 
     try{
+ 
+      const { pointGeos = [] ,idType, idUser, ...infraestructureDetails} = createInfraestructureDto;
+   
+              // Mapear y crear los objetos pointGeos correctamente
+        const mappedPointGeos = pointGeos.map(pointgeo => ({
+            longitude: pointgeo.longitude,
+            latitude: pointgeo.latitude,
+            order: pointgeo.order
+        }));
 
-      const { idType, idUser, ...infraestructureDetails} = createInfraestructureDto;
+       
 
       const infraestructure = this.infraestructureRepository.create({
         ...infraestructureDetails,
+        pointGeos: mappedPointGeos.map(pointgeo => this.pointGeoRepository.create(pointgeo)),
         idType: { id: idType },
         idUser: { id: idUser },
       });
@@ -83,7 +96,7 @@ export class InfraestructuresService {
 
   async update(id: number, updateInfraestructureDto: UpdateInfraestructureDto) {
 
-    const {idType, idUser,...toUpdate } = updateInfraestructureDto;
+    const {idType, idUser,pointGeos,...toUpdate } = updateInfraestructureDto;
 
   
     const infraestructure = await this.infraestructureRepository.preload({
@@ -92,12 +105,13 @@ export class InfraestructuresService {
 
     });
 
-    
+
   
     if(!infraestructure){
       throw new NotFoundException(`Infraestructuracon id ${id} no encontrada`);
     }
-    console.log("aqui lega");
+
+ 
     //Create Query Runner
     const queryRunner = this.dataSource.createQueryRunner();
     
@@ -106,19 +120,31 @@ export class InfraestructuresService {
     await queryRunner.startTransaction();
   
     try{
-
-      if(idType){
+      if (idType) {
         infraestructure.idType = await this.typeService.findOne(idType);
       }
-    
-  
+
+      // Mapear y crear los objetos pointGeos correctamente
+      const mappedPointGeos = pointGeos.map((pointgeo) => ({
+        longitude: pointgeo.longitude,
+        latitude: pointgeo.latitude,
+        order: pointgeo.order,
+      }));
+
+
+      if (pointGeos) {
+        await queryRunner.manager.delete(Pointgeo, { idInfraestructure: { id } });
+        console.log('aqui llega 2');
+        infraestructure.pointGeos = mappedPointGeos.map((pointgeo) =>
+          this.pointGeoRepository.create(pointgeo),
+        );
+      }
 
       await queryRunner.manager.save(infraestructure);
       await queryRunner.commitTransaction();
       await queryRunner.release();
-    
+
       return this.findOne(id);
-  
     } catch{
       
       await queryRunner.rollbackTransaction();

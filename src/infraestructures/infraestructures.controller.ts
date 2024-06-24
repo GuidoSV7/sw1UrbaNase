@@ -12,10 +12,10 @@ export class InfraestructuresController {
 
   @Post()
   // @Auth(ValidRoles.admin)
-  @ApiResponse({status:201, description:'Unidad Educativa Creada exitosamente', type: Infraestructure})
+  @ApiResponse({status:201, description:'Infraestructura Creada exitosamente', type: Infraestructure})
   @ApiResponse({status:400, description:'Bad Request'})
-  create(@Body() createUnidadEducativaDto: CreateInfraestructureDto) {
-    return this.infraestructuresService.create(createUnidadEducativaDto);
+  create(@Body() createInfraestructuresDto: CreateInfraestructureDto) {
+    return this.infraestructuresService.create(createInfraestructuresDto);
   }
 
 

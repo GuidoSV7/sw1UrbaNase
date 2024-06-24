@@ -11,6 +11,8 @@ import { ProductsModule } from './products/products.module';
 import { InfraestructuresModule } from './infraestructures/infraestructures.module';
 import { TypesModule } from './types/types.module';
 import { CategoriesModule } from './categories/categories.module';
+import { PointgeosModule } from './pointgeos/pointgeos.module';
+import { RoutegeosModule } from './routegeos/routegeos.module';
 
 
 @Module({
@@ -51,7 +53,13 @@ import { CategoriesModule } from './categories/categories.module';
     TypesModule,
 
 
-    CategoriesModule
+    CategoriesModule,
+
+
+    PointgeosModule,
+
+
+    RoutegeosModule
 
 
   ],

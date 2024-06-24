@@ -1,7 +1,9 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/auth/entities/user.entity';
+import { Pointgeo } from 'src/pointgeos/entities/pointgeo.entity';
 import { Product } from 'src/products/entities/product.entity';
+import { Routegeo } from 'src/routegeos/entities/routegeo.entity';
 import { Type } from 'src/types/entities/type.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 
@@ -63,4 +65,19 @@ export class Infraestructure {
     )
     products?: Product[];
 
+    //PointGeo
+    @OneToMany(
+        ()=> Pointgeo,
+        (pointgeo) => pointgeo.idInfraestructure,
+        {cascade: true, eager:true}
+    )
+    pointGeos?: Pointgeo[];
+
+    //RouteGeo
+    @OneToMany(
+        ()=> Routegeo,
+        (routegeo) => routegeo.idInfraestructure,
+        {cascade: true, eager:true}
+    )
+    routeGeos?: Routegeo[];
 }
