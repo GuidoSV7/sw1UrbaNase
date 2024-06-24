@@ -4,7 +4,8 @@
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",  "engines": {
+  "license": "UNLICENSED",  
+  "engines": {
     "node": "20.x"
   },
   "scripts": {
