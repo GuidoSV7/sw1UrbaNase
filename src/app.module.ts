@@ -13,6 +13,8 @@ import { TypesModule } from './types/types.module';
 import { CategoriesModule } from './categories/categories.module';
 import { PointgeosModule } from './pointgeos/pointgeos.module';
 import { RoutegeosModule } from './routegeos/routegeos.module';
+import { RegistersModule } from './registers/registers.module';
+
 
 
 @Module({
@@ -67,7 +69,13 @@ import { RoutegeosModule } from './routegeos/routegeos.module';
     PointgeosModule,
 
 
-    RoutegeosModule
+    RoutegeosModule,
+
+
+    RegistersModule,
+
+
+
 
 
   ],

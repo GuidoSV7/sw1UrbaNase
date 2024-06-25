@@ -1,5 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Register } from "src/registers/entities/register.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+
+
+
 
 
 @Entity('users')
@@ -39,10 +44,21 @@ export class User {
       })
     @Column('text', 
     { array: true, 
-        default: ['user'] }
+        }
     
     )
     roles: string[];
 
+    // @ApiProperty({
+    //   type:  Register,
+    //   isArray: true,
+    //   description: 'La lista de Registros s asociados a este user.',
+    //   enum: Register,
+      
 
-}
+    // })
+    // @OneToMany(() => Register, (registers) => registers.idUser,{eager:true})
+    // register: Register[]
+
+  }
+
