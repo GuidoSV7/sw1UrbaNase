@@ -16,7 +16,7 @@ export class PaginationDto {
     
 
     @ApiProperty({
-        default: 10,
+        default: 0,
         description: 'Número de página',
     })
     @IsOptional()
