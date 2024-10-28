@@ -47,6 +47,7 @@ export class InfraestructuresService {
         idType: { id: idType },
         idUser: { id: idUser },
       });
+      console.log("🚀 ~ InfraestructuresService ~ create ~ infraestructure:", infraestructure)
 
       return await this.infraestructureRepository.save(infraestructure);
 

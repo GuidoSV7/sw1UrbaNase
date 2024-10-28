@@ -36,7 +36,7 @@ export class CreateProductDto {
         nullable: false,
 
     })
-    @IsString()
+    /* @IsString() */
     @IsOptional()
     tags: string[];
     

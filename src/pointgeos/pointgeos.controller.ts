@@ -2,12 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PointgeosService } from './pointgeos.service';
 import { CreatePointgeoDto } from './dto/create-pointgeo.dto';
 import { UpdatePointgeoDto } from './dto/update-pointgeo.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Pointgeos')
 @Controller('pointgeos')
 export class PointgeosController {
   constructor(private readonly pointgeosService: PointgeosService) {}
 
   @Post()
+  @ApiResponse({ status: 201, description: 'Pointgeo Creado exitosamente', type: CreatePointgeoDto })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
   create(@Body() createPointgeoDto: CreatePointgeoDto) {
     return this.pointgeosService.create(createPointgeoDto);
   }

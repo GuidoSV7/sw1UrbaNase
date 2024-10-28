@@ -14,6 +14,10 @@ import { CategoriesModule } from './categories/categories.module';
 import { PointgeosModule } from './pointgeos/pointgeos.module';
 import { RoutegeosModule } from './routegeos/routegeos.module';
 import { RegistersModule } from './registers/registers.module';
+/* import { SuscriptionsController } from './suscriptions/suscriptions.controller';
+import { SuscriptionsService } from './suscriptions/suscriptions.service';
+import { SuscriptionsModule } from './suscriptions/suscriptions.module'; */
+import { SuscriptionsModule } from './suscriptions/suscriptions.module';
 
 
 
@@ -75,6 +79,7 @@ import { RegistersModule } from './registers/registers.module';
     RegistersModule,
 
 
+    SuscriptionsModule,
 
 
 
