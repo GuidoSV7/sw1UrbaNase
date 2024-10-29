@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, UseGuards, Req, Headers, SetMetadata, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req, Headers, SetMetadata, Patch, Param, Query } from '@nestjs/common';
 import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 
 @ApiTags('Users')
@@ -9,13 +10,13 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Get('businessman')
-    getUserBusinessman() {
-        return this.usersService.getBusinessman();
+    getUserBusinessman(@Query() paginationDto:PaginationDto) {
+        return this.usersService.getBusinessman(paginationDto);
     }
 
     @Get('user')
-    getUser() {
-        return this.usersService.getUser();
+    getUser(@Query() paginationDto:PaginationDto) {
+        return this.usersService.getUser(paginationDto);
     }
 
     @Patch('desactivate/:id')

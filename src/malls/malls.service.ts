@@ -78,6 +78,7 @@ export class MallsService {
             skip: offset,
             relations: {
                 stands: true,
+                suscriptions: true
             },
         });
     }
