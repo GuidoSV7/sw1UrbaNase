@@ -21,6 +21,11 @@ import { SuscriptionsModule } from './suscriptions/suscriptions.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
+import { MallsModule } from './malls/malls.module';
+/* import { StandsController } from './stands/stands.controller';
+import { StandsService } from './stands/stands.service';
+import { StandsModule } from './stands/stands.module'; */
+import { StandsModule } from './stands/stands.module';
 
 
 
@@ -86,6 +91,12 @@ import { UsersModule } from './users/users.module';
 
 
     UsersModule,
+
+
+    MallsModule,
+
+
+    StandsModule,
 
   ],
   controllers: [UsersController],
