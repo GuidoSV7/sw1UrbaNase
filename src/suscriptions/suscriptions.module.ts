@@ -1,19 +1,21 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { SuscriptionsService } from './suscriptions.service';
 import { SuscriptionsController } from './suscriptions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Suscription } from './entities/suscription.entity';
-import { Type } from 'src/types/entities/type.entity';
-import { TypesModule } from 'src/types/types.module';
-import { User } from 'src/auth/entities/user.entity';
+import { AuthModule } from 'src/auth/auth.module';
+import { StandsModule } from 'src/stands/stands.module';
+import { MallsModule } from 'src/malls/malls.module';
 
 @Module({
+    imports: [
+      TypeOrmModule.forFeature([Suscription]),
+      AuthModule,
+      forwardRef(() => StandsModule),
+      forwardRef(() => MallsModule)
+    ],
     controllers: [SuscriptionsController],
     providers: [SuscriptionsService],
-    imports: [
-        TypeOrmModule.forFeature([Suscription, Type, User]),
-        TypesModule
-    ],
     exports: [SuscriptionsService, TypeOrmModule]
-})
-export class SuscriptionsModule {}
+  })
+  export class SuscriptionsModule {}

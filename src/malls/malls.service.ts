@@ -43,9 +43,9 @@ export class MallsService {
         if (!type) throw new NotFoundException(`Type with ID ${createMallDto.typeId} not found`);
 
         const user = await this.userRepository.findOne({
-            where: { id: createMallDto.userId.toString() }
+            where: { id: createMallDto.idUser.toString() }
         });
-        if (!user) throw new NotFoundException(`User with ID ${createMallDto.userId} not found`);
+        if (!user) throw new NotFoundException(`User with ID ${createMallDto.idUser} not found`);
 
         // Crear la nueva entidad Mall
         const mall = this.mallRepository.create({
@@ -94,9 +94,14 @@ export class MallsService {
 
     async update(id: number, updateMallDto: UpdateMallDto) {
         try {
+            const type = await this.typeRepository.findOne({ where: { id: updateMallDto.typeId } });
+            const user = await this.userRepository.findOne({ where: { id: updateMallDto.idUser.toString() } });
+
             const mall = await this.mallRepository.preload({
                 id,
                 ...updateMallDto,
+                idType: type,
+                idUser: user,
             });
 
             if (!mall) {

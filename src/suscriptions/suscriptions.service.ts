@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { RedeemSuscriptionDto } from './dto/redeem-suscription.dto';
 import { User } from './../auth/entities/user.entity';
+import { Stand } from 'src/stands/entities/stand.entity';
 
 @Injectable()
 export class SuscriptionsService {
@@ -20,6 +21,9 @@ export class SuscriptionsService {
 
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+
+        @InjectRepository(Stand)
+        private readonly standRepository: Repository<Stand>,
 
     ) { }
 
@@ -34,6 +38,7 @@ export class SuscriptionsService {
             const suscription = this.suscriptionRepository.create({
                 ...suscriptionDetails,
                 code: this.generateCode(8),
+                idMall: { id: suscriptionDetails.idMall } as any, // Ensure idMall is correctly typed
             });
             // console.log("🚀 ~ SuscriptionsService ~ create ~ suscription:", suscription)
 
@@ -78,7 +83,11 @@ export class SuscriptionsService {
     async update(id: number, updateSuscriptionDto: UpdateSuscriptionDto) {
         const { idUser, ...toUpdate } = updateSuscriptionDto;
 
-        const suscription = await this.suscriptionRepository.preload({ id, ...toUpdate });
+        const suscription = await this.suscriptionRepository.preload({
+            id,
+            ...toUpdate,
+            idMall: { id: toUpdate.idMall } as any // Ensure idMall is correctly typed
+        });
 
         if (!suscription) {
             throw new NotFoundException(`Suscription con id ${id} no encontrada`);
@@ -144,6 +153,13 @@ export class SuscriptionsService {
             // Asigna el usuario y marca como redimida
             suscription.idUser = user;
             suscription.redeemed = true;
+
+            const stand = await this.standRepository.create({
+                idUser: user,
+                idMall: suscription.idMall,
+                idType: 2 as any,
+            });
+            await this.standRepository.save(stand);
 
             // Guarda la suscripción actualizada
             await this.suscriptionRepository.save(suscription);

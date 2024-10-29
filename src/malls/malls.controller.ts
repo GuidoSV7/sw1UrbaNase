@@ -6,6 +6,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Mall } from './entities/mall.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
+@ApiTags('Malls')
 @Controller('malls')
 export class MallsController {
     constructor(private readonly mallsService: MallsService) { }

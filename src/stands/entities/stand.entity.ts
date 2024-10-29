@@ -6,7 +6,7 @@ import { Infraestructure } from '../../infraestructures/entities/infraestructure
 @Entity('stands')
 export class Stand extends Infraestructure {
     @ApiProperty({ example: 'A-123', description: 'The number/identifier of the stand.' })
-    @Column()
+    @Column('text', { nullable: true })
     number: string;
 
     @ApiProperty({

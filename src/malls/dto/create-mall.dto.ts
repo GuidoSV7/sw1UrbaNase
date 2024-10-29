@@ -24,12 +24,10 @@ export class CreateMallDto {
 
     @ApiProperty({ example: 123.456789, description: 'The longitude of the mall.' })
     @IsNotEmpty()
-    @IsDecimal()
     longitude: number;
 
     @ApiProperty({ example: 123.456789, description: 'The latitude of the mall.' })
     @IsNotEmpty()
-    @IsDecimal()
     latitude: number;
 
     @ApiProperty({ example: 1, description: 'The NR of the mall.' })
@@ -49,6 +47,5 @@ export class CreateMallDto {
 
     @ApiProperty({ example: 1, description: 'The ID of the user.' })
     @IsNotEmpty()
-    @IsNumber()
-    userId: number;
+    idUser: string;
 }

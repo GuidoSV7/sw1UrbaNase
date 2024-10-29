@@ -30,4 +30,4 @@ import { User } from 'src/auth/entities/user.entity';
   controllers: [MallsController],
   exports: [MallsService, TypeOrmModule]
 })
-export class MallsModule {}
+export class MallsModule { }

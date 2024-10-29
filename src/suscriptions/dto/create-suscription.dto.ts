@@ -37,4 +37,12 @@ export class CreateSuscriptionDto {
     @IsOptional()
     idUser: string;
 
+    //IdMall
+    @ApiProperty({
+        description: 'Id of the mall',
+        nullable: false,
+    })
+    @IsNumber()
+    idMall: number;
+
 }
