@@ -31,9 +31,10 @@ export class CreateSuscriptionDto {
     //IdUser
     @ApiProperty({
         description: 'Id of the user',
-        nullable: false,
+        nullable: true,
     })
     @IsString()
+    @IsOptional()
     idUser: string;
 
 }

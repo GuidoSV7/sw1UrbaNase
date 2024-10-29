@@ -7,7 +7,7 @@ import { Register } from './entities/register.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 
-@ApiTags('Registers User')
+@ApiTags('Registers')
 @Controller('registers')
 export class RegistersController {
   constructor(private readonly registersService: RegistersService) {}

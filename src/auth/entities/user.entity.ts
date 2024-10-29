@@ -49,6 +49,14 @@ export class User {
     )
     roles: string[];
 
+    //status
+    @ApiProperty({
+        example: true,
+        description: 'Estado del Usuario',
+      })
+    @Column('boolean', { default: true })
+    status: boolean;
+
     // @ApiProperty({
     //   type:  Register,
     //   isArray: true,

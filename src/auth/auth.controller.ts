@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Req, Headers, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req, Headers, SetMetadata, Patch, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { IncomingHttpHeaders } from 'http';
 
@@ -16,22 +16,22 @@ import { ApiExcludeEndpoint, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
 
 
   @Post('register')
-  @ApiResponse({status:201, description:'Usuario Registrado Correctamente', type: User})
-  @ApiResponse({status:400, description:'Bad Request'})
-  createUser(@Body() createUserDto: CreateUserDto ) {
-    return this.authService.create( createUserDto );
+  @ApiResponse({ status: 201, description: 'Usuario Registrado Correctamente', type: User })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  createUser(@Body() createUserDto: CreateUserDto) {
+    return this.authService.create(createUserDto);
   }
 
   @Post('login')
-  @ApiResponse({status:201, description:'Usuario Logueado exitosamente', type: User})
-  @ApiResponse({status:400, description:'Bad Request'})
-  loginUser(@Body() loginUserDto: LoginUserDto ) {
-    return this.authService.login( loginUserDto );
+  @ApiResponse({ status: 201, description: 'Usuario Logueado exitosamente', type: User })
+  @ApiResponse({ status: 400, description: 'Bad Request' })
+  loginUser(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.login(loginUserDto);
   }
 
   @ApiExcludeEndpoint()
@@ -40,17 +40,17 @@ export class AuthController {
   checkAuthStatus(
     @GetUser() user: User
   ) {
-    return this.authService.checkAuthStatus( user );
+    return this.authService.checkAuthStatus(user);
   }
 
   @ApiExcludeEndpoint()
   @Get('private')
-  @UseGuards( AuthGuard() )
+  @UseGuards(AuthGuard())
   testingPrivateRoute(
     @Req() request: Express.Request,
     @GetUser() user: User,
     @GetUser('email') userEmail: string,
-    
+
     @RawHeaders() rawHeaders: string[],
     @Headers() headers: IncomingHttpHeaders,
   ) {
@@ -71,8 +71,8 @@ export class AuthController {
 
   @ApiExcludeEndpoint()
   @Get('private2')
-  @RoleProtected( ValidRoles.superUser, ValidRoles.admin )
-  @UseGuards( AuthGuard(), UserRoleGuard )
+  @RoleProtected(ValidRoles.superUser, ValidRoles.admin)
+  @UseGuards(AuthGuard(), UserRoleGuard)
   privateRoute2(
     @GetUser() user: User
   ) {
@@ -86,7 +86,7 @@ export class AuthController {
 
   @ApiExcludeEndpoint()
   @Get('private3')
-  @Auth( ValidRoles.admin )
+  @Auth(ValidRoles.admin)
   privateRoute3(
     @GetUser() user: User
   ) {
@@ -97,6 +97,25 @@ export class AuthController {
     }
   }
 
+    /* @Get('businessman')
+    getUserBusinessman() {
+      return this.authService.getBusinessman();
+    }
+
+    @Get('user')
+    getUser() {
+      return this.authService.getUser();
+    }
+
+    @Patch('desactivate/:id')
+    desactivateUser(@Param('id') user: string) {
+      return this.authService.desactivateUser(user);
+    }
+
+    @Patch('activate/:id')
+    activateUser(@Param('id') user: string) {
+      return this.authService.activateUser(user);
+    } */
 
 
 }

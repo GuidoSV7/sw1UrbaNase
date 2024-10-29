@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { SuscriptionsService } from './suscriptions.service';
 import { CreateSuscriptionDto } from './dto/create-suscription.dto';
 import { UpdateSuscriptionDto } from './dto/update-suscription.dto';
+import { RedeemSuscriptionDto } from './dto/redeem-suscription.dto';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Suscription } from './entities/suscription.entity';
@@ -45,5 +46,11 @@ export class SuscriptionsController {
     @Get('user/:id')
     findByUser(@Param('id') id: string) {
         return this.suscriptionsService.findAllByUser(id);
+    }
+
+    // canjear suscripcion
+    @Post('redeem')
+    redeem(@Body() redeemSuscriptionDto: RedeemSuscriptionDto) {
+        return this.suscriptionsService.redeem(redeemSuscriptionDto);
     }
 }

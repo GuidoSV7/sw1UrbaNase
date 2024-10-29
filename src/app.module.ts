@@ -18,6 +18,9 @@ import { RegistersModule } from './registers/registers.module';
 import { SuscriptionsService } from './suscriptions/suscriptions.service';
 import { SuscriptionsModule } from './suscriptions/suscriptions.module'; */
 import { SuscriptionsModule } from './suscriptions/suscriptions.module';
+import { UsersController } from './users/users.controller';
+import { UsersService } from './users/users.service';
+import { UsersModule } from './users/users.module';
 
 
 
@@ -82,9 +85,10 @@ import { SuscriptionsModule } from './suscriptions/suscriptions.module';
     SuscriptionsModule,
 
 
+    UsersModule,
 
   ],
-  controllers: [],
-  providers: [CloudinaryService],
+  controllers: [UsersController],
+  providers: [CloudinaryService, UsersService],
 })
 export class AppModule {}
