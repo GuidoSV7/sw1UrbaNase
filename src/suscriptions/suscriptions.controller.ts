@@ -25,7 +25,25 @@ export class SuscriptionsController {
         return this.suscriptionsService.findAll(paginationDto);
     }
 
-    @Get(':id')
+    // get suscripcion title free
+    @Get('free')
+    findFree() {
+        return this.suscriptionsService.suscriptionFree();
+    }
+
+    // get suscription title monthly
+    @Get('monthly')
+    findMonthly() {
+        return this.suscriptionsService.suscriptionMonthly();
+    }
+
+    // get suscription title annual
+    @Get('annual')
+    findAnnual() {
+        return this.suscriptionsService.suscriptionAnnual();
+    }
+
+    @Get('/:id')
     findOne(@Param('id') id: number) {
         return this.suscriptionsService.findOne(id);
     }
@@ -53,4 +71,14 @@ export class SuscriptionsController {
     redeem(@Body() redeemSuscriptionDto: RedeemSuscriptionDto) {
         return this.suscriptionsService.redeem(redeemSuscriptionDto);
     }
+
+    // get all suscriptions by mall
+    @Get('mall/:id')
+    findByMall(@Param('id') id: number) {
+        return this.suscriptionsService.findAllByMall(id);
+    }
+
+    /*  */
+
+
 }

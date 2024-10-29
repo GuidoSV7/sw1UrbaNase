@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './../auth/entities/user.entity';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,17 +13,25 @@ export class UsersService {
     ) { }
 
     // Buscar usuarios que tengan el rol 'businessman'
-    async getBusinessman() {
-        return await this.userRepository
+    async getBusinessman(paginationDto: PaginationDto) {
+        const { limit = 10, offset = 0 } = paginationDto;
+
+        return this.userRepository
             .createQueryBuilder('user')
+            .leftJoinAndSelect('user.stands', 'stands')
+            .leftJoinAndSelect('user.suscription', 'suscription')
             .where('user.roles @> :role', { role: ['businessman'] })
+            .take(limit)
+            .skip(offset)
             .getMany();
     }
 
     // Buscar usuarios que tengan el rol 'user'
-    async getUser() {
+    async getUser(paginationDto: PaginationDto) {
         return await this.userRepository
             .createQueryBuilder('user')
+            .leftJoinAndSelect('user.stands', 'stands')
+            .leftJoinAndSelect('user.suscription', 'suscription')
             .where('user.roles @> :role', { role: ['user'] })
             .getMany();
     }

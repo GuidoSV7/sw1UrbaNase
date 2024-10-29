@@ -78,6 +78,7 @@ export class MallsService {
             skip: offset,
             relations: {
                 stands: true,
+                suscriptions: true
             },
         });
     }
@@ -128,5 +129,29 @@ export class MallsService {
             this.logger.error(error.message);
             return error.message;
         }
+    }
+
+    //get all suscriptions title free
+    async findAllSuscriptionsFree() {
+        return this.mallRepository.find({
+            where: { suscriptions: { title: 'Free' } },
+            relations: ['suscriptions']
+        });
+    }
+
+    //get all suscriptions title monthly
+    async findAllSuscriptionsMonthly() {
+        return this.mallRepository.find({
+            where: { suscriptions: { title: 'Monthly' } },
+            relations: ['suscriptions']
+        });
+    }
+
+    //get all suscriptions title annual
+    async findAllSuscriptionsAnnual() {
+        return this.mallRepository.find({
+            where: { suscriptions: { title: 'Annual' } },
+            relations: ['suscriptions']
+        });
     }
 }

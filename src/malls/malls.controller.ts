@@ -38,4 +38,22 @@ export class MallsController {
     remove(@Param('id') id: number) {
         return this.mallsService.remove(id);
     }
+
+    // all suscriptions title free
+    @Get('suscriptions/free')
+    findAllSuscriptionsFree() {
+        return this.mallsService.findAllSuscriptionsFree();
+    }
+
+    // all suscriptions title monthly
+    @Get('suscriptions/monthly')
+    findAllSuscriptionsMonthly() {
+        return this.mallsService.findAllSuscriptionsMonthly();
+    }
+
+    // all suscriptions title annual
+    @Get('suscriptions/annual')
+    findAllSuscriptionsAnnual() {
+        return this.mallsService.findAllSuscriptionsAnnual();
+    }
 }

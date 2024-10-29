@@ -1,8 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Register } from "src/registers/entities/register.entity";
 import { Stand } from "src/stands/entities/stand.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-/* import { Stand } from "src/stands/entities/stand.entity"; */
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Suscription } from "src/suscriptions/entities/suscription.entity";
 
 @Entity('users')
 export class User {
@@ -64,4 +63,14 @@ export class User {
   })
   @OneToMany(() => Stand, (stand) => stand.idUser)
   stands?: Stand[];
+
+  //suscription one to one
+  @ApiProperty({
+    type: () => Suscription,
+    nullable: true,
+    description: 'The suscription associated with the user'
+  })
+  @OneToOne(() => Suscription, (suscription) => suscription.idUser)
+  suscription?: Suscription;
+
 }

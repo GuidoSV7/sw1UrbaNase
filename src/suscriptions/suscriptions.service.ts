@@ -49,6 +49,7 @@ export class SuscriptionsService {
         }
     }
 
+
     async findAll(paginationDto: PaginationDto) {
         const { limit = 10, offset = 0 } = paginationDto;
 
@@ -59,25 +60,6 @@ export class SuscriptionsService {
                 idUser: true, // Cargar la relación con el usuario si es necesaria
             },
         });
-    }
-
-
-    async findOne(id: number) {
-
-        let suscription: Suscription;
-
-        const queryBuilder = this.suscriptionRepository.createQueryBuilder('suscription');
-        suscription = await queryBuilder
-            .where('id =:id ', {
-                id: id,
-            })
-            .getOne();
-
-        if (!suscription) {
-            throw new NotFoundException(`Suscription con id ${id} no encontrada`);
-        }
-
-        return suscription;
     }
 
     async update(id: number, updateSuscriptionDto: UpdateSuscriptionDto) {
@@ -114,6 +96,16 @@ export class SuscriptionsService {
         } catch (error) {
             throw new InternalServerErrorException('Error al eliminar la suscripcion');
         }
+    }
+
+    async findOne(id: number): Promise<Suscription> {
+        return this.suscriptionRepository.findOne({
+            where: { id },
+            relations: {
+                idUser: true,
+                idMall: true,
+            },
+        });
     }
 
     // get all suscriptions by user
@@ -169,5 +161,49 @@ export class SuscriptionsService {
             console.log("🚀 ~ SuscriptionsService ~ redeem ~ error:", error);
             throw new InternalServerErrorException('Error al canjear la suscripción');
         }
+    }
+
+    // get all suscriptions by mall
+    async findAllByMall(idMall: number) {
+        const suscriptions = await this.suscriptionRepository.find({
+            where: {
+                idMall: { id: idMall },
+            },
+        });
+
+        return suscriptions;
+    }
+
+    // get suscripcion title free
+    async suscriptionFree() {
+        const suscription = await this.suscriptionRepository.find({
+            where: {
+                title: 'Free',
+            },
+        });
+
+        return suscription;
+    }
+
+    // get suscripcion title monthly
+    async suscriptionMonthly() {
+        const suscription = await this.suscriptionRepository.find({
+            where: {
+                title: 'Monthly',
+            },
+        });
+
+        return suscription;
+    }
+
+    // get suscripcion title annual
+    async suscriptionAnnual() {
+        const suscription = await this.suscriptionRepository.find({
+            where: {
+                title: 'Annual',
+            },
+        });
+
+        return suscription;
     }
 }
