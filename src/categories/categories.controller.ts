@@ -6,7 +6,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Category } from './entities/category.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
-@ApiTags('Types')
+@ApiTags('Categories')
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -20,7 +20,7 @@ export class CategoriesController {
   }
 
   @Get()
-  findAll( @Query() paginationDto:PaginationDto)  {
+  findAll(@Query() paginationDto:PaginationDto)  {
     return this.categoriesService.findAll(paginationDto);
   }
 

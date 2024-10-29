@@ -9,64 +9,63 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 @Injectable()
 export class CategoriesService {
   private readonly logger = new Logger('CategoriesService');
-  
+
 
   constructor(
 
-   
+
 
     @InjectRepository(Category)
     private readonly turnoRepository: Repository<Category>,
-    
-    
+
+
     private readonly dataSource: DataSource,
-  ){}
+  ) { }
 
 
   async create(createCategoryDto: CreateCategoryDto) {
     try {
-      const {...CategoryDetails} = createCategoryDto;
+      const { ...CategoryDetails } = createCategoryDto;
       const turno = this.turnoRepository.create({
         ...CategoryDetails
       });
 
       return await this.turnoRepository.save(turno);
-      
+
     } catch (error) {
-      
+
       this.logger.error(error.message);
       return error.message;
     }
   }
 
-  findAll(paginationDto:PaginationDto) {
+  async findAll(paginationDto: PaginationDto) {
 
-    const {limit = 10, offset = 0} = paginationDto;
+    const { limit = 10, offset = 0 } = paginationDto;
 
     return this.turnoRepository.find({
       take: limit,
       skip: offset
     });
-    
   }
 
-  async findOne(id : number) {
+  async findOne(id: number) {
 
     let turno: Category;
 
-      const queryBuilder = this.turnoRepository.createQueryBuilder();
-      turno = await queryBuilder
-        .where('id =:id ',{
-          id:id,
-        })
-        .getOne();
+    const queryBuilder = this.turnoRepository.createQueryBuilder();
+    turno = await queryBuilder
+      .where('id =:id ', {
+        id: id,
+      })
+      .getOne();
 
-    if(!turno){
-      throw new NotFoundException( `Category con id ${id} no encontrada`);
+    if (!turno) {
+      throw new NotFoundException(`Category con id ${id} no encontrada`);
     }
 
     return turno;
-    
+
   }
 
 
@@ -81,18 +80,18 @@ export class CategoriesService {
 
   }
 
-  async deleteAllCategories(){
+  async deleteAllCategories() {
     const query = this.turnoRepository.createQueryBuilder('turno');
 
-    try{
+    try {
       return await query
-       .delete()
-       .where({})
-       .execute(); 
+        .delete()
+        .where({})
+        .execute();
 
 
 
-    } catch(error){
+    } catch (error) {
       this.logger.error(error.message);
       return error.message;
     }
