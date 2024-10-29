@@ -28,6 +28,12 @@ export class StandsController {
         return this.standsService.findOne(id);
     }
 
+    //get stand by user
+    @Get('user/:id')
+    findByUser(@Param('id') id: string) {
+        return this.standsService.findByUser(id);
+    }
+
     @Patch(':id')
     update(@Param('id') id: number,
         @Body() updateStandDto: UpdateStandDto) {

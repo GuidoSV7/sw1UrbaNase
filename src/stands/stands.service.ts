@@ -5,6 +5,7 @@ import { Stand } from './entities/stand.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { User } from '../auth/entities/user.entity';
 
 @Injectable()
 export class StandsService {
@@ -13,6 +14,9 @@ export class StandsService {
     constructor(
         @InjectRepository(Stand)
         private readonly standRepository: Repository<Stand>,
+
+        @InjectRepository(User)
+        private readonly dataSource: Repository<User>,
     ) { }
 
     async create(createStandDto: CreateStandDto) {
@@ -59,5 +63,13 @@ export class StandsService {
             throw new NotFoundException(`Stand #${id} not found`);
         }
         return this.standRepository.remove(stand);
+    }
+
+    //get stands by user
+    async findByUser(idUser: string) {
+        const User = await this.dataSource.findOne({ where: { id: idUser } });
+        return this.standRepository.findOne({
+            where: { idUser: User },
+        });
     }
 }
