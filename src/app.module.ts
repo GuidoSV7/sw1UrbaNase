@@ -11,41 +11,33 @@ import { ProductsModule } from './products/products.module';
 import { InfraestructuresModule } from './infraestructures/infraestructures.module';
 import { TypesModule } from './types/types.module';
 import { CategoriesModule } from './categories/categories.module';
-import { PointgeosModule } from './pointgeos/pointgeos.module';
 import { RoutegeosModule } from './routegeos/routegeos.module';
 import { RegistersModule } from './registers/registers.module';
-/* import { SuscriptionsController } from './suscriptions/suscriptions.controller';
-import { SuscriptionsService } from './suscriptions/suscriptions.service';
-import { SuscriptionsModule } from './suscriptions/suscriptions.module'; */
 import { SuscriptionsModule } from './suscriptions/suscriptions.module';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
 import { MallsModule } from './malls/malls.module';
-/* import { StandsController } from './stands/stands.controller';
-import { StandsService } from './stands/stands.service';
-import { StandsModule } from './stands/stands.module'; */
 import { StandsModule } from './stands/stands.module';
 import { KmlsModule } from './kmls/kmls.module';
+import { BoundariesModule } from './boundaries/boundaries.module';
+import { InputsModule } from './inputs/inputs.module';
 
 
 
 @Module({
   imports: [
 
-
     CloudinaryModule,
-    
-    ConfigModule.forRoot({isGlobal:true}),
 
-    
+    ConfigModule.forRoot({ isGlobal: true }),
 
     TypeOrmModule.forRoot({
       ssl: process.env.STAGE === 'prod',
       extra: {
         ssl: process.env.STAGE === 'prod'
-              ? { rejectUnauthorized: false }
-              : null,
+          ? { rejectUnauthorized: false }
+          : null,
       },
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -66,44 +58,33 @@ import { KmlsModule } from './kmls/kmls.module';
 
     AuthModule,
 
-
     ProductsModule,
-
 
     InfraestructuresModule,
 
-
     TypesModule,
-
 
     CategoriesModule,
 
-
-    PointgeosModule,
-
-
     RoutegeosModule,
-
 
     RegistersModule,
 
-
     SuscriptionsModule,
-
 
     UsersModule,
 
-
     MallsModule,
-
 
     StandsModule,
 
-
     KmlsModule,
 
+    BoundariesModule,
+
+    InputsModule,
   ],
   controllers: [UsersController],
   providers: [CloudinaryService, UsersService],
 })
-export class AppModule {}
+export class AppModule { }

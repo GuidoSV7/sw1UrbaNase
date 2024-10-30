@@ -1,15 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsArray, IsDefined, IsNumber, IsOptional, IsString, MinLength, ValidateNested } from 'class-validator';
-import { CreatePointgeoDto } from 'src/pointgeos/dto/create-pointgeo.dto';
+import { IsNumber, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class CreateInfraestructureDto {
-  @ApiProperty({ description: 'The name of the infrastructure.',
-  nullable: false,
-  minLength: 1,
-   })
-   @IsString()
-   @MinLength(1)
+  @ApiProperty({
+    description: 'The name of the infrastructure.',
+    nullable: false,
+    minLength: 1,
+  })
+  @IsString()
+  @MinLength(1)
   name: string;
 
   @IsString()
@@ -45,24 +44,11 @@ export class CreateInfraestructureDto {
   phone?: string;
 
   @IsNumber()
-   @ApiProperty({ description: 'The ID type of the infrastructure.' })
+  @ApiProperty({ description: 'The ID type of the infrastructure.' })
   idType: number;
 
   @IsString()
-  
+
   @ApiProperty({ description: 'The user ID associated with the infrastructure.' })
   idUser: string;
-
-  @ApiProperty({
-    description: 'PointGeos de la Infraestructura',
-    type: CreatePointgeoDto,
-    isArray: true,
-  })
-  @Type(() => CreatePointgeoDto)
-
-  @ValidateNested({ each: true })
-  @IsArray()
-  @IsOptional()
-  pointGeos?: CreatePointgeoDto[];
-
 }
