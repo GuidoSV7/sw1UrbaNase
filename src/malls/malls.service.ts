@@ -1,8 +1,8 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateMallDto } from './dto/create-mall.dto';
 import { UpdateMallDto } from './dto/update-mall.dto';
 import { Mall } from './entities/mall.entity';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { Stand } from 'src/stands/entities/stand.entity';
@@ -32,7 +32,6 @@ export class MallsService {
         @InjectRepository(Type)
         private readonly typeRepository: Repository<Type>,
 
-        private readonly dataSource: DataSource,
     ) { }
 
     async create(createMallDto: CreateMallDto): Promise<Mall> {
@@ -62,7 +61,6 @@ export class MallsService {
             stands: [],         // Inicializar arrays vacíos para las relaciones
             suscriptions: [],   // Inicializar arrays vacíos para las relaciones
             products: [],       // Heredado de Infrastructure
-            pointGeos: [],      // Heredado de Infrastructure
             routeGeos: [],      // Heredado de Infrastructure
         });
 

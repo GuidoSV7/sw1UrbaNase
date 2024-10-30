@@ -4,10 +4,12 @@ import { Stand } from '../../stands/entities/stand.entity';
 import { Infraestructure } from '../../infraestructures/entities/infraestructure.entity';
 import { Suscription } from '../../suscriptions/entities/suscription.entity';
 import { Kml } from 'src/kmls/entities/kml.entity';
+import { Boundary } from 'src/boundaries/entities/boundary.entity';
+import { Input } from 'src/inputs/entities/input.entity';
 
 @Entity('malls')
 export class Mall extends Infraestructure {
-    @ApiProperty({ 
+    @ApiProperty({
         type: () => [Stand],
         description: 'Stands in this mall',
         isArray: true
@@ -17,7 +19,7 @@ export class Mall extends Infraestructure {
     })
     stands?: Stand[];
 
-    @ApiProperty({ 
+    @ApiProperty({
         type: () => [Suscription],
         description: 'Subscriptions for this mall',
         isArray: true
@@ -27,7 +29,7 @@ export class Mall extends Infraestructure {
     })
     suscriptions?: Suscription[];
 
-    @ApiProperty({ 
+    @ApiProperty({
         type: () => [Kml],
         description: 'KMLs for this mall',
         isArray: true
@@ -36,4 +38,24 @@ export class Mall extends Infraestructure {
         cascade: true
     })
     kml?: Kml;
+
+    @ApiProperty({
+        type: () => [Boundary],
+        description: 'Boundaries for this mall',
+        isArray: true
+    })
+    @OneToMany(() => Boundary, (boundary) => boundary.idMall, {
+        cascade: true
+    })
+    boundary?: Boundary[];
+
+    @ApiProperty({
+        type: () => [Input],
+        description: 'Inputs for this mall',
+        isArray: true
+    })
+    @OneToMany(() => Input, (input) => input.idMall, {
+        cascade: true
+    })
+    input?: Input[];
 }
