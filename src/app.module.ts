@@ -26,6 +26,7 @@ import { MallsModule } from './malls/malls.module';
 import { StandsService } from './stands/stands.service';
 import { StandsModule } from './stands/stands.module'; */
 import { StandsModule } from './stands/stands.module';
+import { KmlsModule } from './kmls/kmls.module';
 
 
 
@@ -97,6 +98,9 @@ import { StandsModule } from './stands/stands.module';
 
 
     StandsModule,
+
+
+    KmlsModule,
 
   ],
   controllers: [UsersController],
