@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, OneToMany } from 'typeorm';
+import { Entity, OneToMany, OneToOne } from 'typeorm';
 import { Stand } from '../../stands/entities/stand.entity';
 import { Infraestructure } from '../../infraestructures/entities/infraestructure.entity';
 import { Suscription } from '../../suscriptions/entities/suscription.entity';
+import { Kml } from 'src/kmls/entities/kml.entity';
 
 @Entity('malls')
 export class Mall extends Infraestructure {
@@ -25,4 +26,14 @@ export class Mall extends Infraestructure {
         cascade: true
     })
     suscriptions?: Suscription[];
+
+    @ApiProperty({ 
+        type: () => [Kml],
+        description: 'KMLs for this mall',
+        isArray: true
+    })
+    @OneToOne(() => Kml, (kml) => kml.idMall, {
+        cascade: true
+    })
+    kml?: Kml;
 }
