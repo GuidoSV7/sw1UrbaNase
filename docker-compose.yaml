@@ -21,7 +21,9 @@ services:
       stripeEndpointSecret: ${stripeEndpointSecret}
       STRIPE_SECRET: ${STRIPE_SECRET}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    restart: always
 
   db:
     image: postgres:13
@@ -33,6 +35,12 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   pgdata:
