@@ -22,8 +22,7 @@ import { StandsModule } from './stands/stands.module';
 import { KmlsModule } from './kmls/kmls.module';
 import { BoundariesModule } from './boundaries/boundaries.module';
 import { InputsModule } from './inputs/inputs.module';
-
-
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -83,6 +82,8 @@ import { InputsModule } from './inputs/inputs.module';
     BoundariesModule,
 
     InputsModule,
+
+    PaymentsModule,
   ],
   controllers: [UsersController],
   providers: [CloudinaryService, UsersService],

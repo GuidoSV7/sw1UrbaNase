@@ -29,13 +29,13 @@ export class CreateSuscriptionDto {
     date: string;
 
     //IdUser
-    @ApiProperty({
-        description: 'Id of the user',
-        nullable: true,
-    })
-    @IsString()
-    @IsOptional()
-    idUser: string;
+    // @ApiProperty({
+    //     description: 'Id of the user',
+    //     nullable: true,
+    // })
+    // @IsString()
+    // @IsOptional()
+    // idUser: string;
 
     //IdMall
     @ApiProperty({

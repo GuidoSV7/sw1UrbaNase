@@ -13,7 +13,7 @@ export class Suscription {
   @Column('text', { default: '123456' })
   code: string;
 
-  @ApiProperty({ example: 'Suscription 1', description: 'The title of the subscription.' })
+  @ApiProperty({ example: 'Free', description: 'The title of the subscription.' })
   @Column()
   title: string;
 
