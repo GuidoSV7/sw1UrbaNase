@@ -9,6 +9,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { RedeemSuscriptionDto } from './dto/redeem-suscription.dto';
 import { User } from './../auth/entities/user.entity';
 import { Stand } from 'src/stands/entities/stand.entity';
+import { PaymentsService } from 'src/payments/payments.service';
 
 @Injectable()
 export class SuscriptionsService {
@@ -25,6 +26,8 @@ export class SuscriptionsService {
         @InjectRepository(Stand)
         private readonly standRepository: Repository<Stand>,
 
+        private readonly paymentsService: PaymentsService,
+
     ) { }
 
     generateCode(length = 8): string {
@@ -33,16 +36,19 @@ export class SuscriptionsService {
 
     async create(createSuscriptionDto: CreateSuscriptionDto) {
         try {
-            const { idUser, ...suscriptionDetails } = createSuscriptionDto;
-            // console.log("🚀 ~ SuscriptionsService ~ create ~ idUser:", idUser)
-            const suscription = this.suscriptionRepository.create({
-                ...suscriptionDetails,
-                code: this.generateCode(8),
-                idMall: { id: suscriptionDetails.idMall } as any, // Ensure idMall is correctly typed
-            });
-            // console.log("🚀 ~ SuscriptionsService ~ create ~ suscription:", suscription)
 
-            return await this.suscriptionRepository.save(suscription);
+            if (createSuscriptionDto.mount === 0) {
+                const { ...suscriptionDetails } = createSuscriptionDto;
+                const suscription = this.suscriptionRepository.create({
+                    ...suscriptionDetails,
+                    code: this.generateCode(8),
+                    idMall: { id: suscriptionDetails.idMall } as any, // Ensure idMall is correctly typed
+                });
+                return await this.suscriptionRepository.save(suscription);
+            } else {
+                const payment = await this.paymentsService.createPaymentSession(createSuscriptionDto);
+                return payment;
+            }
         } catch (error) {
             this.logger.error(error.message);
             return error.message;
